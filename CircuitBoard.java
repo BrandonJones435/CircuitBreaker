@@ -106,6 +106,8 @@ public class CircuitBoard {
 					endingPoint = new Point(row, col); 
 				}
 			}
+			// Print out my board
+			System.out.print(board);
 			fileScan.close();
 		}
 	}

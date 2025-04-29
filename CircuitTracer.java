@@ -24,6 +24,14 @@ public class CircuitTracer {
 
 	/** Print instructions for running CircuitTracer from the command line. */
 	private void printUsage() {
+		System.out.println("Make sure that all of your java files have been saved");
+		System.out.println("Usage: javac CircuitTracer.java && java CircuitTracer -s|-q -c|-g <input-file>");
+		System.out.println(" -s : use a stack-based search"); 
+		System.out.println(" -q : use a queue-based search");
+		System.out.println(" -c : output results to the console");
+		System.out.println(" -g : output results to a GUI");
+		System.out.println(" <input-file> : path to your circuit board text file");
+		System.exit(1);
 		//TODO: print out clear usage instructions when there are problems with
 		// any command line args
 	}
