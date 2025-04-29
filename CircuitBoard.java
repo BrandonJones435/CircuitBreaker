@@ -43,16 +43,71 @@ public class CircuitBoard {
 	 * @throws InvalidFileFormatException for any file formatting or content issue
 	 */
 	public CircuitBoard(String filename) throws FileNotFoundException {
-		Scanner fileScan = new Scanner(new File(filename));
+		// Initialize Scanner so my program doesn't get mad at me putting it in a try block
+		Scanner fileScan = null; 
+		try {
+			fileScan = new Scanner(new File(filename));
+		} catch (FileNotFoundException e) {
+			throw new FileNotFoundException("Could not find your file given the File Name. DO BETTER");
+		}
 		
-		//TODO: parse the given file to populate the char[][]
-		// throw FileNotFoundException if Scanner cannot read the file
-		// throw InvalidFileFormatException if any issues are encountered while parsing the file
-		
-		ROWS = 0; //replace with initialization statements using values from file
-		COLS = 0;
-		
-		fileScan.close();
+		// Check to make sure that the file has a first line 
+		if (!fileScan.hasNextLine()) {
+			fileScan.close();
+			throw new InvalidFileFormatException("Your file does not have row and col parameter");
+		}
+
+		// Read the first line as a string array and split it into two integers 
+		String[] dimensions = fileScan.nextLine().trim().split("\\s+");
+		if (dimensions.length != 2) { // check if you have more than or less than two integers 
+			fileScan.close();
+			throw new InvalidFileFormatException("You have too little or too many parameters");
+		}
+		// Store the first two integers as rows and cols 
+		try {
+			ROWS = Integer.parseInt(dimensions[0]);
+			COLS = Integer.parseInt(dimensions[1]);
+		} catch (NumberFormatException e) {
+			fileScan.close();
+			throw new InvalidFileFormatException("You need to have the two parameters be integers");
+		}
+
+		// Initialize the board 
+		char[][] board = new char[ROWS][COLS];
+
+		// Read the next board 
+		for (int row = 0; row < ROWS; row++) {
+			// Check you can always parse more data with in the parameters
+			if (!fileScan.hasNextLine()) {
+				fileScan.close();
+				throw new InvalidFileFormatException("Does not have enough data");
+			}
+			// Store each row as a string 
+			String line = fileScan.nextLine();
+			// Split each line into a string array 
+			String[] tokens = line.trim().split("\\s+");
+
+			// Check to make sure the number of tokens in a row is the same as the cols amount 
+			if (tokens.length != COLS) {
+				fileScan.close(); 
+				throw new InvalidFileFormatException("You have too many or too like chars in data"); 
+			}
+
+			for (int col = 0; col < COLS; col++) {
+				char c = tokens[col].charAt(0);
+				if (ALLOWED_CHARS.indexOf(c) == -1) { // Checks to see if my the character is one of my ALLOWED_CHARS
+					fileScan.close();
+					throw new InvalidFileFormatException("One of your data points is not allowed");
+				}
+				board[row][col] = c; 
+				if (c == START) { // If the data point I just parsed is the START point than assign it to startingPoint
+					startingPoint = new Point(row, col); 
+				} else if (c == END) { // If data point is the end point
+					endingPoint = new Point(row, col); 
+				}
+			}
+			fileScan.close();
+		}
 	}
 	
 	/** Copy constructor - duplicates original board
