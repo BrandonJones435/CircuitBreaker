@@ -1,5 +1,6 @@
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Search for shortest paths between start and end points on a circuit board
@@ -24,7 +25,6 @@ public class CircuitTracer {
 
 	/** Print instructions for running CircuitTracer from the command line. */
 	private void printUsage() {
-		System.out.println("Make sure that all of your java files have been saved");
 		System.out.println("Usage: javac CircuitTracer.java && java CircuitTracer -s|-q -c|-g <input-file>");
 		System.out.println(" -s : use a stack-based search"); 
 		System.out.println(" -q : use a queue-based search");
@@ -35,7 +35,7 @@ public class CircuitTracer {
 		//TODO: print out clear usage instructions when there are problems with
 		// any command line args
 	}
-	
+
 	/** 
 	 * Set up the CircuitBoard and all other components based on command
 	 * line arguments.
@@ -43,11 +43,41 @@ public class CircuitTracer {
 	 * @param args command line arguments passed through from main()
 	 */
 	public CircuitTracer(String[] args) {
-		//TODO: parse and validate command line args - first validation provided
+		// Parse and validate command line args
 		if (args.length != 3) {
 			printUsage();
-			return; //exit the constructor immediately
+			return;
 		}
+		List<String> argList = java.util.Arrays.asList(args); // Conver to list for easier searching
+		// Check to make sure they chose console or GUI output
+		if (!(argList.contains("-c") || argList.contains("-g"))) {
+			System.out.println("You need to choose console (-c) or GUI (-g) output");
+			printUsage();
+			return;
+		}
+		// initialize an empty storage object
+		Storage<TraceState> stateStore;
+		if (args[0].equals("-s")) {
+			stateStore = Storage.getStackInstance();
+		} else if (args[0].equals("-q")) {
+			stateStore = Storage.getQueueInstance();
+		} else {
+			System.out.println("First argument must be -s (stack) or -q (queue)");
+			printUsage();
+			return;
+		}
+		// Read in the circuit board from the given file with exception handling
+		CircuitBoard circuitBoard = null;
+		try {
+			circuitBoard = new CircuitBoard(args[2]);
+		} catch (Exception e) {
+			System.out.println("Error reading circuit board file: " + args[2]);
+			e.printStackTrace();
+			System.exit(1);
+		}
+
+		// Run the search for best paths
+		
 		//TODO: initialize the Storage to use either a stack or queue
 		//TODO: read in the CircuitBoard from the given file
 		//TODO: run the search for best paths
