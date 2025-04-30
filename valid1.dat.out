@@ -1,0 +1,13 @@
+[[C@33ad328eError reading circuit board file: valid1.dat
+java.lang.IllegalStateException: Scanner closed
+	at java.base/java.util.Scanner.ensureOpen(Scanner.java:1175)
+	at java.base/java.util.Scanner.findWithinHorizon(Scanner.java:1807)
+	at java.base/java.util.Scanner.hasNextLine(Scanner.java:1636)
+	at CircuitBoard.<init>(CircuitBoard.java:81)
+	at CircuitTracer.<init>(CircuitTracer.java:72)
+	at CircuitTracerTester.lambda$testCircuitTracerValidFile$1(CircuitTracerTester.java:557)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
