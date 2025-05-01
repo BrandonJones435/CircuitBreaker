@@ -4,7 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
+        {
+            "type": "java",
+            "name": "CircuitTracer",
+            "request": "launch",
+            "mainClass": "CircuitTracer",
+            "projectName": "CircuitBreaker_8db4ef26"
+        },
         {
             "type": "java",
             "name": "CircuitTracer (with args)",
