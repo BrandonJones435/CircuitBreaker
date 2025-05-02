@@ -60,7 +60,7 @@ This program is desinged to find the shortest path between two components on a c
 
  **Main Classes and Responsiblities 
 
- - **CircuitTracer**: Handles command-line argument parsing, initializes the search, and manages output. It is the main entry point of the program.
+- **CircuitTracer**: Handles command-line argument parsing, initializes the search, and manages output. It is the main entry point of the program.
 - **CircuitBoard**: Represents the circuit board, reads and validates the board from a file, and provides access to board data and start/end points.
 - **TraceState**: Encapsulates the current state of a path being traced, including the current position and the path taken so far.
 - **Storage<T>**: Abstracts the storage mechanism for search states, allowing the program to use either a stack or a queue for search (selected by the user).
