@@ -42,6 +42,7 @@ public class CircuitBoard {
 	 * @throws FileNotFoundException if Scanner cannot open or read the file
 	 * @throws InvalidFileFormatException for any file formatting or content issue
 	 */
+
 	public CircuitBoard(String filename) throws FileNotFoundException {
 		// Initialize Scanner so my program doesn't get mad at me putting it in a try block
 		Scanner fileScan = null; 
@@ -73,25 +74,24 @@ public class CircuitBoard {
 		}
 
 		// Initialize the board 
-		char[][] board = new char[ROWS][COLS];
+		board = new char[ROWS][COLS];
 
 		// Read the next board 
+		int startCount = 0;
+		int endCount = 0;
+		int actualRowCount = 0;
 		for (int row = 0; row < ROWS; row++) {
-			// Check you can always parse more data with in the parameters
 			if (!fileScan.hasNextLine()) {
 				fileScan.close();
 				throw new InvalidFileFormatException("Does not have enough data");
 			}
-			// Store each row as a string 
 			String line = fileScan.nextLine();
-			// Split each line into a string array 
 			String[] tokens = line.trim().split("\\s+");
-
-			// Check to make sure the number of tokens in a row is the same as the cols amount 
 			if (tokens.length != COLS) {
 				fileScan.close(); 
-				throw new InvalidFileFormatException("You have too many or too like chars in data"); 
+				throw new InvalidFileFormatException("You have too many or too few chars in data"); 
 			}
+			actualRowCount++;
 
 			for (int col = 0; col < COLS; col++) {
 				char c = tokens[col].charAt(0);
@@ -101,15 +101,32 @@ public class CircuitBoard {
 				}
 				board[row][col] = c; 
 				if (c == START) { // If the data point I just parsed is the START point than assign it to startingPoint
+					startCount++;
+					if (startCount > 1) {
+						fileScan.close();
+						throw new InvalidFileFormatException("Multiple starting points ('1') found in the file.");
+					}
 					startingPoint = new Point(row, col); 
 				} else if (c == END) { // If data point is the end point
+					endCount++;
+					if (endCount > 1) {
+						fileScan.close();
+						throw new InvalidFileFormatException("Multiple ending points ('2') found in the file.");
+					}
 					endingPoint = new Point(row, col); 
 				}
 			}
-			// Print out my board
-			System.out.print(board);
-			fileScan.close();
 		}
+		// After reading all rows, check for extra rows
+		if (fileScan.hasNextLine()) {
+			fileScan.close();
+			throw new InvalidFileFormatException("File contains extra rows of data");
+		}
+		if (actualRowCount != ROWS) {
+			fileScan.close();
+			throw new InvalidFileFormatException("Number of data rows does not match specified ROWS");
+		}
+		fileScan.close();
 	}
 	
 	/** Copy constructor - duplicates original board

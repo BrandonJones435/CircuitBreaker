@@ -32,7 +32,6 @@ public class CircuitTracer {
 		System.out.println(" -g : output results to a GUI");
 		System.out.println(" <input-file> : path to your circuit board text file");
 		System.exit(1);
-		//TODO: print out clear usage instructions when there are problems with
 		// any command line args
 	}
 
@@ -77,11 +76,68 @@ public class CircuitTracer {
 		}
 
 		// Run the search for best paths
-		
-		//TODO: initialize the Storage to use either a stack or queue
-		//TODO: read in the CircuitBoard from the given file
-		//TODO: run the search for best paths
+		List<TraceState> bestPaths = new ArrayList<>(); // Initialize an empty list that stores TraceState objects
+
+		// Add a new initial TraceState object for each open position
+		Point start = circuitBoard.getStartingPoint();
+		Point end = circuitBoard.getEndingPoint();
+		int[][] directions = { {0,1}, {1,0}, {0,-1}, {-1,0} };
+		boolean directConnection = false;
+		for (int[] dir : directions) {
+			int adjRow = start.x + dir[0];
+			int adjCol = start.y + dir[1];
+			if (adjRow == end.x && adjCol == end.y) {
+				// '1' is directly adjacent to '2'
+				System.out.println(circuitBoard); // Just print the board as the solution
+				directConnection = true;
+				break;
+			}
+		}
+		if (!directConnection) {
+			for (int[] dir : directions) {
+				int newRow = start.x + dir[0];
+				int newCol = start.y + dir[1]; 
+				if (circuitBoard.isOpen(newRow, newCol)) {
+					stateStore.store(new TraceState(circuitBoard, newRow, newCol));
+				}
+			}
+			// Main search loop
+			while (!stateStore.isEmpty()) {
+				TraceState current = stateStore.retrieve();
+
+				// If we found the solution 
+				if (current.isSolution()) {
+					if (bestPaths.isEmpty() || current.pathLength() == bestPaths.get(0).pathLength()) {
+						bestPaths.add(current);
+					} else if (current.pathLength() < bestPaths.get(0).pathLength()) { // Found a better path
+						bestPaths.clear();
+						bestPaths.add(current);
+					}
+				} else {
+					// Generate all valid next TraceState objects and add them to stateStore
+					for (int[] dir2 : directions) {
+						int nextRow = current.getRow() + dir2[0];
+						int nextCol = current.getCol() + dir2[1];
+						if (current.isOpen(nextRow, nextCol)) {
+							try {
+								stateStore.store(new TraceState(current, nextRow, nextCol));
+							} catch (Exception e) {
+								// Ignore invalid moves
+							}
+						}
+					}
+				}
+			}
+			// Output results to console
+			if (bestPaths.isEmpty()) {
+				System.out.println("No valid solutions found.");
+			} else {
+				for (TraceState solution : bestPaths) {
+					System.out.println(solution);
+				}
+			}
+		}
 		//TODO: output results to console or GUI, according to specified choice
 	}
-	
-} // class CircuitTracer
+}
+		// class CircuitTracer
