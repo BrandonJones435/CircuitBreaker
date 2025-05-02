@@ -95,9 +95,7 @@ parameter than can be exception handling they become a lot easier to code for.
  
 EXTRA CREDIT:
 
- If the project had opportunities for extra credit that you attempted,
- be sure to call it out so the grader does not overlook it.
-
+I did create a GUI option for the user. 
 
 ----------------------------------------------------------------------------
 

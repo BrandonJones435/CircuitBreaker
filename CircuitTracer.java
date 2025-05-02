@@ -152,10 +152,9 @@ public class CircuitTracer {
 				}
 			}
 		}
-		//TODO: output results to console or GUI, according to specified choice
 	}
 
-	private void showResultsInGUI(String results) {
+	private void showResultsInGUI(String results) { // Method for creating my GUI if the user requests 
 		JFrame frame = new JFrame("CircuitTracer Results");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JTextArea textArea = new JTextArea(results);
