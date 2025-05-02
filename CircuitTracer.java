@@ -1,6 +1,8 @@
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Search for shortest paths between start and end points on a circuit board
@@ -54,6 +56,7 @@ public class CircuitTracer {
 			printUsage();
 			return;
 		}
+		boolean useGUI = argList.contains("-g");
 		// initialize an empty storage object
 		Storage<TraceState> stateStore;
 		if (args[0].equals("-s")) {
@@ -130,14 +133,38 @@ public class CircuitTracer {
 			}
 			// Output results to console
 			if (bestPaths.isEmpty()) {
-				System.out.println("No valid solutions found.");
+				if (useGUI) {
+					showResultsInGUI("No valid solutions found.");
+				} else {
+					System.out.println("No valid solutions found.");
+				}
 			} else {
-				for (TraceState solution : bestPaths) {
-					System.out.println(solution);
+				if (useGUI) {
+					StringBuilder sb = new StringBuilder();
+					for (TraceState solution : bestPaths) {
+						sb.append(solution.toString()).append("\n");
+					}
+					showResultsInGUI(sb.toString());
+				} else {
+					for (TraceState solution : bestPaths) {
+						System.out.println(solution);
+					}
 				}
 			}
 		}
 		//TODO: output results to console or GUI, according to specified choice
+	}
+
+	private void showResultsInGUI(String results) {
+		JFrame frame = new JFrame("CircuitTracer Results");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JTextArea textArea = new JTextArea(results);
+		textArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+		textArea.setEditable(false);
+		frame.add(new JScrollPane(textArea));
+		frame.setSize(600, 400);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
 	}
 }
 		// class CircuitTracer
