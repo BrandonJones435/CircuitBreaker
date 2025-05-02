@@ -31,18 +31,26 @@ INCLUDED FILES:
 
 COMPILING AND RUNNING:
 
-1. Open your terminal using ctrl + `
-2. Make sure that you are in the directory containing all of your source files
-3. First run javac CircuitTracer.java
-4. Then run java CircuitTracer followed by -s or -q then followed by -c or -g and lastly followed by input-file. See the usage documentation below. This is depending on whether you want a stack or queue based search. The -c or -g is whether you want the results to go to the console or GUI. 
- Following the following usage guidlines to generate your stack or queue based search as well as output either to the console or GUI. 
-Usage: javac CircuitTracer.java && java CircuitTracer -s|-q -c|-g <input-file>
-	 -s : use a stack-based search
-	 -q : use a queue-based search
-	 -c : output results to the console
-	 -g : output results to a GUI
-	 <input-file> : path to your circuit board text file
+1. Open your terminal.
+2. Navigate to the directory containing all your source files.
+3. Compile all Java files:
+   javac *.java
+4. Run the program with:
+   java CircuitTracer -s|-q -c|-g <input-file>
+   - -s : use a stack-based search
+   - -q : use a queue-based search
+   - -c : output results to the console
+   - -g : output results to a GUI window
+   - <input-file> : path to your circuit board text file
 
+EXAMPLES:
+   java CircuitTracer -s -c valid1.dat
+   java CircuitTracer -q -g valid2.dat
+
+NOTES:
+- If no valid solution exists, the program will print "No valid solutions found." (in the console or GUI).
+- If the input file is invalid, an error message will be displayed.
+- If -g is specified, a GUI window will open to display the results; otherwise, results are printed to the terminal.
 
 PROGRAM DESIGN AND IMPORTANT CONCEPTS:
 
