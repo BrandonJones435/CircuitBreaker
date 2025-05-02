@@ -72,27 +72,27 @@ PROGRAM DESIGN QUESTIONS:
 
 **How does the choice of Storage configuration (stack vs queue) affect the sequence in which paths are explored in the search algorithm?**
 
-The choice of Storage configuration fundamentally changes the order in which the search algorithm explores possible paths. Using a stack (depth-first search, DFS), the algorithm always explores the most recently discovered path first, diving deep into one possible solution before backtracking. This means the search may follow a single path to its end before considering alternatives. Using a queue (breadth-first search, BFS), the algorithm explores all paths of a given length before moving on to longer paths, systematically expanding outward from the starting point. This results in a level-by-level exploration of the board, ensuring that all shorter paths are considered before any longer ones.
+The choice of Storage configuration fundamentally changes the order in which the search algorithm explores possible paths. Using a stack, the algorithm always explores the most recently discovered path first, diving deep into one possible solution before backtracking. This means the search may follow a single path to its end before considering alternatives. Using a queue, the algorithm explores all paths of a given length before moving on to longer paths, systematically expanding outward from the starting point. This results in a level-by-level exploration of the board, ensuring that all shorter paths are considered before any longer ones.
 
 **Is the total number of search states (possible paths) affected by the choice of stack or queue?**
 
-No, the total number of possible search states (i.e., all valid paths that could be explored) is determined by the board layout and not by the choice of storage structure. Both stack and queue configurations will generate the same set of possible states, but the order in which they are explored will differ.
+No, the total number of possible search states is determined by the board layout and not by the choice of storage structure. Both stack and queue configurations will generate the same set of possible states, but the order in which they are explored will differ.
 
 **Is using one of the storage structures likely to find a solution in fewer steps than the other? Always?**
 
-A queue (BFS) is more likely to find a shortest solution in fewer steps, because it explores all shortest paths first. A stack (DFS) may find a solution quickly if it gets lucky, but it can also go deep down a long, non-optimal path before backtracking, potentially requiring more steps to find a shortest solution. However, in the worst case, both may need to explore all possible states.
+A queue is more likely to find a shortest solution in fewer steps, because it explores all shortest paths first. A stack may find a solution quickly if it gets lucky, but it can also go deep down a long, non-optimal path before backtracking, potentially requiring more steps to find a shortest solution. However, in the worst case, both may need to explore all possible states.
 
 **Does using either of the storage structures guarantee that the first solution found will be a shortest path?**
 
-Using a queue (BFS) guarantees that the first solution found is a shortest path, because all shorter paths are explored before any longer ones. Using a stack (DFS) does not guarantee this; the first solution found may not be the shortest.
+Using a queue guarantees that the first solution found is a shortest path, because all shorter paths are explored before any longer ones. Using a stack (DFS) does not guarantee this; the first solution found may not be the shortest.
 
 **How is memory use (the maximum number of states in Storage at one time) affected by the choice of underlying structure?**
 
-BFS (queue) typically uses more memory than DFS (stack), because it stores all partial paths at the current depth before moving to the next. DFS (stack) only needs to store the current path and any unexplored branches, which can be much less in sparse or deep search spaces. However, in the worst case, both can require exponential memory relative to the board size.
+A queue typically uses more memory than a stack, because it stores all partial paths at the current depth before moving to the next. A stack only needs to store the current path and any unexplored branches, which can be much less in sparse or deep search spaces. However, in the worst case, both can require exponential memory relative to the board size.
 
 **What is the Big-Oh runtime order for the search algorithm? What does the order reflect?**
 
-The Big-Oh runtime order for the search algorithm is O(b^d), where b is the branching factor (the average number of possible moves from each position) and d is the depth (the length of the shortest solution path for BFS, or the maximum path length for DFS). This order reflects the total number of possible paths that may be explored, which depends on the board's size, layout, and the number of open positions. The maximum size of Storage at any time is also O(b^d) for BFS, and can be up to O(d) for DFS in the best case, but O(b^d) in the worst case.
+The Big-Oh runtime order for the search algorithm is O(b^d), where b is the branching factor (the average number of possible moves from each position) and d is the depth (the length of the shortest solution path for BFS, or the maximum path length for DFS). This order reflects the total number of possible paths that may be explored, which depends on the board's size, layout, and the number of open positions. The maximum size of Storage at any time is also O(b^d) for a queue, and can be up to O(d) for a stack in the best case, but O(b^d) in the worst case.
 
 TESTING:
 
