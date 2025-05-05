@@ -1,7 +1,7 @@
 Error reading circuit board file: invalid1.dat
 InvalidFileFormatException: Multiple starting points ('1') found in the file.
 	at CircuitBoard.<init>(CircuitBoard.java:107)
-	at CircuitTracer.<init>(CircuitTracer.java:71)
+	at CircuitTracer.<init>(CircuitTracer.java:74)
 	at CircuitTracerTester.lambda$testCircuitTracerInvalidFile$0(CircuitTracerTester.java:448)
 	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
 	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
